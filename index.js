@@ -173,7 +173,10 @@ function incdec(elem, value) {
   } else if (player == turn) {
     if (player_life < 1) player_life = 1 // a turn can't be less than 1
     new_inner_html = "Turn<br/>" + player_life;
-  } else {
+  } else if (elem.classList.contains("cmdr-dmg")) {
+    if (player_life < 0) player_life = 0 // commander damage can't be less than 0
+    new_inner_html = player_life;
+  } {
     new_inner_html = player_life;
   }
   // document.getElementById(player + "-life-text").innerHTML = new_inner_html
