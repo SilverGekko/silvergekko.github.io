@@ -48,7 +48,6 @@ body {
   height: 100%;
   /* these three items will center the contents */
   display: flex;
-  flex-wrap: wrap;
   position: relative;
   border-radius: 6vh;
 }
