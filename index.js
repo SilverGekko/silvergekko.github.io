@@ -9,16 +9,20 @@ var color_dict = {
   "p4" : "#FFA500"
 };
 
+function remove_idle(elem) {
+  if (elem.parentElement.classList.contains("idle")) {
+    elem.parentElement.classList.remove("idle")
+    elem.parentElement.classList.add("idle-reset")
+  }
+}
+
 function register() {
   document.querySelectorAll(".button-span").forEach(function(elem) {
     elem.onmousedown = function () {
         timeoutid = start_plus_ten_timer(elem)
       fadein(elem)
       timeout_dict[elem] = timeoutid
-      if (elem.parentElement.classList.contains("idle")) {
-        elem.parentElement.classList.remove("idle")
-        elem.parentElement.classList.add("idle-reset")
-      }
+      remove_idle(elem)
     }
     elem.addEventListener("touchstart", (event) => {
       event.preventDefault()
@@ -37,6 +41,7 @@ function register() {
       clearTimeout(timeout_dict[elem])
       if (elem.classList.contains("idle"))
         elem.classList.remove(idle)
+        remove_idle(elem)
     }, false);
   });
 
