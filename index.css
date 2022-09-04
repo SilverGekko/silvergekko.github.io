@@ -1,0 +1,330 @@
+body {
+  overflow: hidden;
+  margin: 0;
+  font-family: "Bookman Old Style";
+}
+
+.main-win {
+  box-sizing: border-box;
+  background-color: black;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.item {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.bottom {
+  padding: 0.25vh;
+  flex-grow: 1;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+  width: 100%;
+}
+
+.idle {
+  opacity: .35;
+}
+
+.main-life {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 85%;
+  height: 100%;
+  /* these three items will center the contents */
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  border-radius: 6vh;
+}
+
+.spanner {
+  height: 1vh;
+  width: 100%;
+  clear: both;
+}
+
+.button-span,
+.single-button {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: 0.1s;
+  border-radius: 6vh;
+}
+
+.single-button {
+  /* overwrite border raduis */
+  border-radius: 3vh;
+}
+
+.main-sidebar .button-span.decrease {
+  border-radius: 3vh 0 0 3vh;
+}
+
+.main-sidebar .button-span.increase {
+  border-radius: 0 3vh 3vh 0;
+}
+
+.main-life .button-span.decrease {
+  border-radius: 6vh 0 0 6vh;
+}
+
+.main-life .button-span.increase {
+  border-radius: 0 6vh 6vh 0;
+}
+
+.life-text {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events:none;
+}
+
+.tax-text,
+.turn-text {
+  text-align: center;
+  font-size: 4vh;
+}
+
+.util-text {
+  text-align: center;
+  font-size: 6vh;
+}
+
+.life-text-main {
+  font-size: 40vh;
+}
+
+.life-text-cmdr-dmg {
+  font-size: 10vh;
+}
+
+.dark {
+  opacity: 0.2;
+}
+
+.main-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.left.up .main-sidebar {
+  padding: 1vh 1vh 5.5vh 1vh;
+}
+
+.left.down .main-sidebar {
+  padding: 5.5vh 1vh 0 1vh;
+}
+
+.right.up .main-sidebar {
+  padding: 1vh 1vh 5.5vh 0;
+}
+
+.right.down .main-sidebar {
+  padding: 5.5vh 1vh 0 0;
+}
+
+.cmd-dmg-side,
+#turn-counter,
+#open-settings-container,
+#reset {
+  border-radius: 3vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 50%;
+  width: 11.5vw;
+  margin-bottom: 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#settings {
+  border-radius: 3vh;
+  background-color: gray;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  top: 50%;
+  left: 50%;
+  width: 80vh;
+  height: 80vh;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events:none;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 2vh;
+}
+
+.big-color {
+  width: 100%;
+  height: 100%;
+}
+
+#blank-out {
+  background-color: black;
+  opacity: 0;
+  pointer-events:none;
+}
+
+.fade-in-bg {
+  animation: fadeInBG .3s forwards;
+}
+
+.fade-in-settings {
+  animation: fadeInSettings .3s forwards;
+}
+
+.fade-out-bg {
+  animation: fadeOutBG .3s forwards;
+}
+
+.fade-out-settings {
+  animation: fadeOutSettings .3s forwards;
+}
+
+@keyframes fadeInBG {
+  from { opacity: 0; }
+  to {
+    opacity: 0.75;
+    pointer-events: auto;
+  }
+}
+
+@keyframes fadeOutBG {
+  from { opacity: 0.75; }
+  to {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@keyframes fadeInSettings {
+  from { opacity: 0; }
+  to {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@keyframes fadeOutSettings {
+  from { opacity: 1; }
+  to {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.up .cmd-dmg-side:last-child {
+  margin-bottom: 0;
+}
+
+#open-settings-container {
+  position: fixed; /* or absolute */
+  position: absolute;
+  margin: auto;
+  left: 86%;
+  top: 50%;
+  width: 5.4vw;
+  height:10vh;
+  left: 58.68%;
+  transform: translate(-50%, -50%);
+}
+
+#reset {
+  position: fixed; /* or absolute */
+  position: absolute;
+  margin: auto;
+  top: 50%;
+  height:10vh;
+  width: 5.4vw;
+  left: 52.78%;
+  transform: translate(-50%, -50%);
+}
+
+#turn-counter {
+  position: fixed; /* or absolute */
+  position: absolute;
+  margin: auto;
+  top: 50%;
+  left: 43.78%;
+  height:10vh;
+  transform: translate(-50%, -50%);
+}
+
+.cmd-dmg-bottom {
+  height: 100%;
+  width: 13.5vw;
+  float: right;
+  margin-left: 1vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.up .main-life,
+.up .cmd-dmg-side {
+  transform: rotate(180deg);
+}
+
+#player1 .main-life,
+#p1p1-container,
+#p2p1-container,
+#p3p1-container,
+#p4p1-container {
+  background-color: Crimson;
+}
+
+#player2 .main-life,
+#p1p2-container,
+#p2p2-container,
+#p3p2-container,
+#p4p2-container {
+  background-color: SlateBlue;
+}
+
+#player3 .main-life,
+#p1p3-container,
+#p2p3-container,
+#p3p3-container,
+#p4p3-container {
+  background-color: SeaGreen;
+}
+
+#player4 .main-life,
+#p1p4-container,
+#p2p4-container,
+#p3p4-container,
+#p4p4-container {
+  background-color: Orange;
+}
+
+#open-settings-container,
+#reset,
+#turn-counter {
+  background-color: rgb(85,85,85);
+}

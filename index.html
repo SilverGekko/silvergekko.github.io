@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+  content="
+    height = device-height,
+    width = device-width,
+    initial-scale = 1.0,
+    minimum-scale = 1.0,
+    maximum-scale = 1.0,
+    user-scalable = no"
+    />
+  <title>LifeCounter</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="index.js"></script>
+</head>
+<body>
+  <div class="main-win">
+    <div class="item left up" id="player1">
+      <div class="top">
+        <div class="main-life color1">
+          <div class="button-span decrease" id="p1-decrease"></div>
+          <div class="button-span increase" id="p1-increase"></div>
+          <div class="life-text life-text-main" id="p1-life-text">40</div>
+        </div>
+        <div class="main-sidebar">
+          <div class="cmd-dmg-side color1" id="p1p1-container">
+            <div class="single-button count-by-one tax" id="p1p1-increase"></div>
+            <div class="life-text tax-text" id="p1p1-life-text">Tax<br/>0</div>
+          </div>
+          <div class="cmd-dmg-side color2 idle" id="p1p2-container">
+            <div class="button-span decrease" id="p1p2-decrease"></div>
+            <div class="button-span increase" id="p1p2-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p1p2-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color3 idle" id="p1p3-container">
+            <div class="button-span decrease" id="p1p3-decrease"></div>
+            <div class="button-span increase" id="p1p3-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p1p3-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color4 idle" id="p1p4-container">
+            <div class="button-span decrease" id="p1p4-decrease"></div>
+            <div class="button-span increase" id="p1p4-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p1p4-life-text">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom"></div>
+    </div>
+    <div class="item right up" id="player2">
+      <div class="top">
+        <div class="main-sidebar">
+          <div class="cmd-dmg-side color2" id="p2p2-container">
+            <div class="single-button count-by-one tax" id="p2p2-increase"></div>
+            <div class="life-text tax-text" id="p2p2-life-text">Tax<br/>0</div>
+          </div>
+          <div class="cmd-dmg-side color1 idle" id="p2p1-container">
+            <div class="button-span decrease" id="p2p1-decrease"></div>
+            <div class="button-span increase" id="p2p1-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p2p1-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color4 idle" id="p2p4-container">
+            <div class="button-span decrease" id="p2p4-decrease"></div>
+            <div class="button-span increase" id="p2p4-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p2p4-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color3 idle" id="p2p3-container">
+            <div class="button-span decrease" id="p2p3-decrease"></div>
+            <div class="button-span increase" id="p2p3-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p2p3-life-text">0</div>
+          </div>
+        </div>
+        <div class="main-life color2">
+          <div class="button-span decrease" id="p2-decrease"></div>
+          <div class="button-span increase" id="p2-increase"></div>
+          <div class="life-text life-text-main" id="p2-life-text">40</div>
+        </div>
+      </div>
+      <div class="bottom"></div>
+    </div>
+    <div class="item left down" id="player3">
+      <div class="bottom"></div>
+      <div class="top">
+        <div class="main-life color3">
+          <div class="button-span decrease" id="p3-decrease"></div>
+          <div class="button-span increase" id="p3-increase"></div>
+          <div class="life-text life-text-main" id="p3-life-text">40</div>
+        </div>
+        <div class="main-sidebar">
+          <div class="cmd-dmg-side color2 idle" id="p3p2-container">
+            <div class="button-span decrease" id="p3p2-decrease"></div>
+            <div class="button-span increase" id="p3p2-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p3p2-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color1 idle" id="p3p1-container">
+            <div class="button-span decrease" id="p3p1-decrease"></div>
+            <div class="button-span increase" id="p3p1-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p3p1-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color4 idle" id="p3p4-container">
+            <div class="button-span decrease" id="p3p4-decrease"></div>
+            <div class="button-span increase" id="p3p4-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p3p4-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color3" id="p3p3-container">
+            <div class="single-button count-by-one tax" id="p3p3-increase"></div>
+            <div class="life-text tax-text" id="p3p3-life-text">Tax<br/>0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item right down" id="player4">
+      <div class="bottom"></div>
+      <div class="top">
+        <div class="main-sidebar">
+          <div class="cmd-dmg-side color1 idle" id="p4p1-container">
+            <div class="button-span decrease" id="p4p1-decrease"></div>
+            <div class="button-span increase" id="p4p1-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p4p1-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color2 idle" id="p4p2-container">
+            <div class="button-span decrease" id="p4p2-decrease"></div>
+            <div class="button-span increase" id="p4p2-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p4p2-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color3 idle" id="p4p3-container">
+            <div class="button-span decrease" id="p4p3-decrease"></div>
+            <div class="button-span increase" id="p4p3-increase"></div>
+            <div class="life-text life-text-cmdr-dmg" id="p4p3-life-text">0</div>
+          </div>
+          <div class="cmd-dmg-side color4" id="p4p4-container">
+            <div class="single-button count-by-one tax" id="p4p4-increase"></div>
+            <div class="life-text tax-text" id="p4p4-life-text">Tax<br/>0</div>
+          </div>
+        </div>
+        <div class="main-life color4">
+          <div class="button-span decrease" id="p4-decrease"></div>
+          <div class="button-span increase" id="p4-increase"></div>
+          <div class="life-text life-text-main" id="p4-life-text">40</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="turn-counter">
+    <div class="single-button count-by-one" id="turn-increase"></div>
+    <div class="life-text turn-text" id="turn-text">Turn<br/>1</div>
+  </div>
+  <div id="open-settings-container">
+    <div class="single-button count-by-one-special" id="open-settings"></div>
+    <div class="life-text util-text" id="settings-text">⚙️</div>
+  </div>
+  <div id="reset">
+    <div class="single-button count-by-one-reset" id="reset-all"></div>
+    <div class="life-text util-text" id="reset-text">♻️</div>
+  </div>
+  <div class="main-win fade-out-bg hidden" id="blank-out"></div>
+  <div class="main-win fade-out-settings hidden" id="settings">
+    <input type="color" class="big-color up left" id="p1-color" >
+    <input type="color" class="big-color up right" id="p2-color"></input>
+    <input type="color" class="big-color down left" id="p3-color"></input>
+    <input type="color" class="big-color down right" id="p4-color"></input>
+  </div>
+</body>
+</html>
