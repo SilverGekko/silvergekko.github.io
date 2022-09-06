@@ -1,5 +1,5 @@
 @media (orientation: portrait) {
-  body {
+  .main-win {
     transform: rotate(90deg);
   }
 }
