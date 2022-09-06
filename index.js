@@ -145,18 +145,14 @@ function incdec(elem, value) {
   var tax = "tax"
   var turn = "turn"
   var elem_to_update
-  if (elem.classList.contains(turn)) {
-    elem_to_update = document.getElementById("turn-text"); 
-  } else {
-    elem_to_update = document.getElementById(player + "-life-text"); 
-  }
+  elem_to_update = document.getElementById(player + "-text"); 
   player_life = elem_to_update.innerHTML
 
   if (elem.classList.contains(tax) || elem.classList.contains(turn)) {
     player_life = player_life.split("<br>")[1]
   }
 
-  delta = direction == "increase" ? 1 : -1;
+  delta = (direction == "increase" ? 1 : -1);
   if (value !== null && value !== undefined) {
     delta = delta * value
     elem.classList.add("modified")
@@ -209,10 +205,10 @@ function reset_all() {
   document.querySelectorAll(".tax-text").forEach(function(elem) {
     elem.innerHTML = "Tax<br/>0"
   });
-  document.querySelectorAll(".life-text-main").forEach(function(elem) {
+  document.querySelectorAll(".life-main").forEach(function(elem) {
     elem.innerHTML = "40"
   });
-  document.querySelectorAll(".life-text-cmdr-dmg").forEach(function(elem) {
+  document.querySelectorAll(".life-cmdr-dmg").forEach(function(elem) {
     elem.innerHTML = "0"
   });
   document.querySelectorAll(".idle-reset").forEach(function(elem) {

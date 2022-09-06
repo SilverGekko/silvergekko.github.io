@@ -89,7 +89,7 @@ body {
   border-radius: 0 6vh 6vh 0;
 }
 
-.life-text {
+.life {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -110,11 +110,11 @@ body {
   font-size: 6vh;
 }
 
-.life-text-main {
+.life-main {
   font-size: 40vh;
 }
 
-.life-text-cmdr-dmg {
+.life-cmdr-dmg {
   font-size: 10vh;
 }
 
