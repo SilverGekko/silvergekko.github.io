@@ -115,10 +115,7 @@ function register() {
   }, false)
 
   for (const [key, value] of Object.entries(color_dict)) {
-    console.log("#" + key + "-color")
     document.querySelectorAll("#" + key + "-color").forEach(function(elem) {
-      console.log(elem)
-      console.log(color_dict[key])
       elem.defaultValue = color_dict[key]
     });
   }
@@ -148,14 +145,14 @@ function incdec(elem, value) {
   var tax = "tax"
   var turn = "turn"
   var elem_to_update
-  if (player == "turn") {
-    elem_to_update = document.getElementById(player + "-text"); 
+  if (elem.classList.contains(turn)) {
+    elem_to_update = document.getElementById("turn-text"); 
   } else {
     elem_to_update = document.getElementById(player + "-life-text"); 
   }
   player_life = elem_to_update.innerHTML
 
-  if (elem.classList.contains(tax) || player == turn) {
+  if (elem.classList.contains(tax) || elem.classList.contains(turn)) {
     player_life = player_life.split("<br>")[1]
   }
 
@@ -170,16 +167,15 @@ function incdec(elem, value) {
   if (elem.classList.contains(tax)) {
     if (player_life < 0) player_life = 0 // commande tax can't be less than 0
     new_inner_html = "Tax<br/>" + player_life;
-  } else if (player == turn) {
+  } else if (elem.classList.contains(turn)) {
     if (player_life < 1) player_life = 1 // a turn can't be less than 1
     new_inner_html = "Turn<br/>" + player_life;
   } else if (elem.classList.contains("cmdr-dmg")) {
     if (player_life < 0) player_life = 0 // commander damage can't be less than 0
     new_inner_html = player_life;
-  } {
+  } else {
     new_inner_html = player_life;
   }
-  // document.getElementById(player + "-life-text").innerHTML = new_inner_html
   elem_to_update.innerHTML = new_inner_html
   elem.classList.remove("dark")
 }
@@ -196,8 +192,8 @@ function onLongPress(element, callback) {
   let timer;
   element.addEventListener('touchstart', () => { 
     timer = setTimeout(() => {
-    timer = null;
-    callback();
+      timer = null;
+      callback();
     }, 500);
   });
 
@@ -233,8 +229,6 @@ function toggle_settings(set_colors) {
       for (const [key, value] of Object.entries(color_dict)) {
         document.querySelectorAll(".color" + i).forEach(function(elem) {
           var color = document.getElementById("p" + i + "-color").value
-          console.log("color")
-          console.log(color)
           elem.style.backgroundColor = color;
         });
       }
