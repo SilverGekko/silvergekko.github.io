@@ -174,8 +174,6 @@ function incdec(elem, value) {
     }
     if (player_life < 0) {
       player_life = 0
-      console.log("player " + player)
-      // document.getElementById(player + "-container").classList.add("idle")
       change = false
       //need to re-add the dark class
   }
@@ -185,14 +183,12 @@ function incdec(elem, value) {
     }
     new_inner_html = player_life;
     //also need to adjust normal life at the same time
-    console.log(player)
     if (change) {
       const regex = "p[0-9]"
       const found = player.match(regex)[0]
       matching_player_elem = document.getElementById(found + "-text")
       matching_player_elem.innerHTML = parseInt(matching_player_elem.innerHTML) - delta
     }
-    // matching_player_life_html = document.getElementById(matching_player_life).innerHTML
   } else {
     new_inner_html = player_life;
   }

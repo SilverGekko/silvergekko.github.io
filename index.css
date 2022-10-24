@@ -359,16 +359,6 @@
     font-family: "Bookman Old Style";
   }
   
-  /* this hilariously both works and does not work*/
-  /* .rotate {
-    transform: rotate(90deg);
-    transform-origin:bottom left;
-    position:absolute;
-    top:-100vw;
-    height:100vw;
-    width:100vh;
-  } */
-  
   .main-win {
     box-sizing: border-box;
     background-color: black;
@@ -455,7 +445,6 @@
     height: 100%;
     opacity: 0;
     transition: 0.1s;
-    /* border-radius: 6vh; */
   }
   
   .single-button {
@@ -546,8 +535,6 @@
   }
   
   .right .main-sidebar {
-    /* padding: 0 0 0 1vh; */
-    /* transform: rotate(180deg); */
     flex-direction: row-reverse;
   }
   
@@ -559,7 +546,6 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: 100%;
     width: 10vw;
-    /* margin-bottom: 1vh; */
     display: flex;
     justify-content: center;
     align-items: center;
