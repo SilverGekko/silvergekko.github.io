@@ -161,14 +161,38 @@ function incdec(elem, value) {
   player_life = parseInt(player_life) + delta
   var new_inner_html
   if (elem.classList.contains(tax)) {
-    if (player_life < 0) player_life = 0 // commande tax can't be less than 0
+    if (player_life < 0) player_life = 0 // commander tax can't be less than 0
     new_inner_html = "Tax<br/>" + player_life;
   } else if (elem.classList.contains(turn)) {
     if (player_life < 1) player_life = 1 // a turn can't be less than 1
     new_inner_html = "Turn<br/>" + player_life;
   } else if (elem.classList.contains("cmdr-dmg")) {
-    if (player_life < 0) player_life = 0 // commander damage can't be less than 0
+    // restrict commander damage range to 0-21
+    change = true
+    if (player_life <= 0) {
+      document.getElementById(player + "-container").classList.add("idle")
+    }
+    if (player_life < 0) {
+      player_life = 0
+      console.log("player " + player)
+      // document.getElementById(player + "-container").classList.add("idle")
+      change = false
+      //need to re-add the dark class
+  }
+    if (player_life > 21) {
+      player_life = 21
+      change = false
+    }
     new_inner_html = player_life;
+    //also need to adjust normal life at the same time
+    console.log(player)
+    if (change) {
+      const regex = "p[0-9]"
+      const found = player.match(regex)[0]
+      matching_player_elem = document.getElementById(found + "-text")
+      matching_player_elem.innerHTML = parseInt(matching_player_elem.innerHTML) - delta
+    }
+    // matching_player_life_html = document.getElementById(matching_player_life).innerHTML
   } else {
     new_inner_html = player_life;
   }
