@@ -1,4 +1,13 @@
 window.onload = register
+var portrait;
+if (window.matchMedia("(orientation: portrait)").matches) {
+  var portrait = true
+} else if (window.matchMedia("(orientation: landscape)").matches) {
+  var portrait = false
+} else {
+  console.log("Halt and catch fire.")
+}
+console.log(portrait)
 
 var timeout_dict = {};
 
@@ -8,6 +17,42 @@ var color_dict = {
   "p3" : "#2E8B57",
   "p4" : "#FFA500"
 };
+
+var totals = {
+  /* Main Life  */
+  "p1" : 40,
+  "p2" : 40,
+  "p3" : 40,
+  "p4" : 40,
+  /* Commander Damage  */
+  "p1p2" : 0,
+  "p1p3" : 0,
+  "p1p4" : 0,
+  ///////////
+  "p2p1" : 0,
+  "p2p3" : 0,
+  "p2p4" : 0,
+  ///////////
+  "p3p1" : 0,
+  "p3p2" : 0,
+  "p3p4" : 0,
+  ///////////
+  "p4p1" : 0,
+  "p4p2" : 0,
+  "p4p3" : 0,
+  /* Tax  */
+  "p1p1" : 0,
+  "p2p2" : 0,
+  "p3p3" : 0,
+  "p4p4" : 0,
+  /* Turn #  */
+  "turn" : 1
+};
+
+function print_totals() {
+  console.log("totals: ")
+  console.log(JSON.stringify(totals, undefined, 2))
+}
 
 function remove_idle(elem) {
   if (elem.parentElement.classList.contains("idle")) {
@@ -69,41 +114,45 @@ function register() {
     }, false);
   });
 
-  var elem = document.querySelector("#reset-all")
-  elem.onmousedown = function () {
-    fadein(elem)
-  }
-  elem.addEventListener("touchstart", (event) => {
-    event.preventDefault()
-    fadein(elem)
-  }, false)
-  elem.onmouseup = function () {
-    fadeout(elem)
-    reset_all()
-  }
-  elem.addEventListener("touchend", (event) => {
-    event.preventDefault()
-    fadeout(elem)
-    reset_all()
-  }, false)
-
-  var reset_elem = document.querySelector("#open-settings")
-  reset_elem.onmousedown = function () {
-    fadein(reset_elem)
-  }
-  reset_elem.addEventListener("touchstart", (event) => {
-    event.preventDefault()
-    fadein(reset_elem)
-  }, false)
-  reset_elem.onmouseup = function () {
-    fadeout(reset_elem)
-    toggle_settings("in")
-  }
-  reset_elem.addEventListener("touchend", (event) => {
-    event.preventDefault()
-    fadeout(reset_elem)
-    toggle_settings("in")
-  }, false)
+  var elems = document.querySelectorAll(".reset-all")
+  elems.forEach((elem) => {
+    elem.onmousedown = function () {
+      fadein(elem)
+    }
+    elem.addEventListener("touchstart", (event) => {
+      event.preventDefault()
+      fadein(elem)
+    }, false)
+    elem.onmouseup = function () {
+      fadeout(elem)
+      reset_all()
+    }
+    elem.addEventListener("touchend", (event) => {
+      event.preventDefault()
+      fadeout(elem)
+      reset_all()
+    }, false)
+  });
+  //end reset-all
+  var settings_elems = document.querySelectorAll(".open-settings")
+  settings_elems.forEach((elem) => {
+    elem.onmousedown = function () {
+      fadein(elem)
+    }
+    elem.addEventListener("touchstart", (event) => {
+      event.preventDefault()
+      fadein(elem)
+    }, false)
+    elem.onmouseup = function () {
+      fadeout(elem)
+      toggle_settings("in")
+    }
+    elem.addEventListener("touchend", (event) => {
+      event.preventDefault()
+      fadeout(elem)
+      toggle_settings("in")
+    }, false)
+  });
 
   var settings_off = document.querySelector("#blank-out")
   settings_off.onmouseup = function () {
@@ -130,6 +179,57 @@ function start_dec_by_one_timer(elem) {
   return setTimeout(function () { incdec(elem, -1) }, 400)
 }
 
+// function update_totals(elem, new_total) {
+//   if (elem.classList.contains(tax)) {
+//     taxes[player] = new_total
+//   } else if (elem.classList.contains(turn)) {
+//     // player_life = player_life.split("<br>")[1]
+//     turns = new_total
+//   } else if (elem.classList.contains(cmdr_dmg)) {
+//     cmdr_dmgs[player] = new_total
+//   } else {
+//     life_totals[player] = new_total
+//   }
+// }
+
+function update_totals() {
+  for (var key in totals) {
+    for (const orientation of ["-P", "-L"]) {
+      if(totals.hasOwnProperty(key)) {
+        //var value = totals[key]
+        elem = document.getElementById(key + "-text" + orientation)
+        var new_inner_html;
+        //there is probably a better way to do this
+        if (elem.classList.contains("tax-text")) {
+          if (portrait)
+            elem.innerHTML = "Tax: " +  totals[key]
+          else
+            elem.innerHTML = "Tax<br/>" + totals[key]
+        } else if (elem.classList.contains("turn-text")) {
+          if (portrait)
+            elem.innerHTML = "Turn: " +  totals[key]
+          else
+            elem.innerHTML = "Turn<br/>" + totals[key]
+          } else {
+          elem.innerHTML = totals[key]
+        }
+        if (elem.classList.contains("life-cmdr-dmg") && totals[key] == 0 && !elem.parentElement.classList.contains("idle")) {
+          elem.parentElement.classList.add("idle")
+        }
+        if (elem.classList.contains("life-cmdr-dmg") && totals[key] != 0 && elem.parentElement.classList.contains("idle")) {
+          elem.parentElement.classList.remove("idle")
+        }
+      }
+    }
+  }
+}
+
+const mql = window.matchMedia("(orientation: portrait)");
+mql.onchange = (e) => {
+  portrait = e.matches
+  update_totals()
+}
+
 function incdec(elem, value) {
   if (elem.classList.contains("modified")) {
     elem.classList.remove("modified")
@@ -144,13 +244,32 @@ function incdec(elem, value) {
   var player_life;
   var tax = "tax"
   var turn = "turn"
+  var cmdr_dmg = "cmdr-dmg"
   var elem_to_update
-  elem_to_update = document.getElementById(player + "-text"); 
-  player_life = elem_to_update.innerHTML
+  elem_to_update = document.getElementById(player + "-text");
 
-  if (elem.classList.contains(tax) || elem.classList.contains(turn)) {
-    player_life = player_life.split("<br>")[1]
-  }
+  // player_life = elem_to_update.innerHTML
+
+  console.log("player: ", player)
+  player_life = totals[player]
+  // if (elem.classList.contains(tax)) {
+  //   player_life = taxes[player]
+  //   console.log("contains tax")
+  // } else if (elem.classList.contains(turn)) {
+  //   // player_life = player_life.split("<br>")[1]
+  //   player_life = turns
+  //   console.log("contains turn")
+  // } else if (elem.classList.contains(cmdr_dmg)) {
+  //   player_life = cmdr_dmgs[player]
+  //   console.log("contains cmdr_dmg")
+  // } else {
+  //   player_life = life_totals[player]
+  // }
+
+
+  // if (elem.classList.contains(tax) || elem.classList.contains(turn)) {
+  //   player_life = player_life.split("<br>")[1]
+  // }
 
   delta = (direction == "increase" ? 1 : -1);
   if (value !== null && value !== undefined) {
@@ -158,15 +277,25 @@ function incdec(elem, value) {
     elem.classList.add("modified")
   }
 
+  console.log("player life0: ", player_life)
   player_life = parseInt(player_life) + delta
+  console.log("player life1: ", player_life)
   var new_inner_html
   if (elem.classList.contains(tax)) {
     if (player_life < 0) player_life = 0 // commander tax can't be less than 0
-    new_inner_html = "Tax<br/>" + player_life;
+    if (portrait) {
+      new_inner_html = "Tax: " + player_life;
+    } else {
+      new_inner_html = "Tax<br/>" + player_life;
+    }
   } else if (elem.classList.contains(turn)) {
     if (player_life < 1) player_life = 1 // a turn can't be less than 1
-    new_inner_html = "Turn<br/>" + player_life;
-  } else if (elem.classList.contains("cmdr-dmg")) {
+    if (portrait) {
+      new_inner_html = "Turn: " + player_life;
+    } else {
+      new_inner_html = "Turn<br/>" + player_life;
+    }
+  } else if (elem.classList.contains(cmdr_dmg)) {
     // restrict commander damage range to 0-21
     change = true
     if (player_life <= 0) {
@@ -187,13 +316,23 @@ function incdec(elem, value) {
       const regex = "p[0-9]"
       const found = player.match(regex)[0]
       matching_player_elem = document.getElementById(found + "-text")
-      matching_player_elem.innerHTML = parseInt(matching_player_elem.innerHTML) - delta
+      console.log("found: ", found)
+      // matching_player_elem.innerHTML = parseInt(matching_player_elem.innerHTML) - delta
+      // life_totals[found] -= delta;
+      totals[found] -= delta
+      // matching_player_elem.innerHTML = life_totals[found]
     }
   } else {
-    new_inner_html = player_life;
+    // new_inner_html = player_life;
   }
-  elem_to_update.innerHTML = new_inner_html
+  totals[player] = player_life
+
+  update_totals()
+
+  // elem_to_update.innerHTML = new_inner_html
   elem.classList.remove("dark")
+
+  print_totals()
 }
 
 function fadein(elem) {
@@ -222,21 +361,45 @@ function onLongPress(element, callback) {
 }
 
 function reset_all() {
-  document.querySelectorAll(".tax-text").forEach(function(elem) {
-    elem.innerHTML = "Tax<br/>0"
-  });
-  document.querySelectorAll(".life-main").forEach(function(elem) {
-    elem.innerHTML = "40"
-  });
-  document.querySelectorAll(".life-cmdr-dmg").forEach(function(elem) {
-    elem.innerHTML = "0"
-  });
-  document.querySelectorAll(".idle-reset").forEach(function(elem) {
-    elem.classList.remove("idle-reset")
-    elem.classList.add("idle")
-  });
+  totals = {
+    "p1" : 40,
+    "p2" : 40,
+    "p3" : 40,
+    "p4" : 40,
+    "p1p2" : 0,
+    "p1p3" : 0,
+    "p1p4" : 0,
+    "p2p1" : 0,
+    "p2p3" : 0,
+    "p2p4" : 0,
+    "p3p1" : 0,
+    "p3p2" : 0,
+    "p3p4" : 0,
+    "p4p1" : 0,
+    "p4p2" : 0,
+    "p4p3" : 0,
+    "p1p1" : 0,
+    "p2p2" : 0,
+    "p3p3" : 0,
+    "p4p4" : 0,
+    "turn" : 1
+  }
+  update_totals()
+  // document.querySelectorAll(".tax-text").forEach(function(elem) {
+  //   elem.innerHTML = "Tax<br/>0"
+  // });
+  // document.querySelectorAll(".life-main").forEach(function(elem) {
+  //   elem.innerHTML = "40"
+  // });
+  // document.querySelectorAll(".life-cmdr-dmg").forEach(function(elem) {
+  //   elem.innerHTML = "0"
+  // });
+  // document.querySelectorAll(".idle-reset").forEach(function(elem) {
+  //   elem.classList.remove("idle-reset")
+  //   elem.classList.add("idle")
+  // });
   
-  document.getElementById("turn-text").innerHTML = "Turn<br/>1"
+  // document.getElementById("turn-text").innerHTML = "Turn<br/>1"
 }
 
 function toggle_settings(set_colors) {

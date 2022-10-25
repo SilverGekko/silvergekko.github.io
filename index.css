@@ -429,7 +429,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    border-radius: 6vh;
+    border-radius: 4vh;
   }
   
   .spanner {
@@ -449,23 +449,23 @@
   
   .single-button {
     /* overwrite border raduis */
-    border-radius: 3vh;
+    border-radius: 2vh;
   }
   
   .main-sidebar .button-span.decrease {
-    border-radius: 3vh 3vh 0 0;
+    border-radius: 2vh 2vh 0 0;
   }
   
   .main-sidebar .button-span.increase {
-    border-radius: 0 0 3vh 3vh;
+    border-radius: 0 0 2vh 2vh;
   }
   
   .main-life .button-span.decrease {
-    border-radius: 6vh 6vh 0 0;
+    border-radius: 4vh 4vh 0 0;
   }
   
   .main-life .button-span.increase {
-    border-radius: 0 0 6vh 6vh;
+    border-radius: 0 0 4vh 4vh;
   }
   
   .life {
@@ -481,28 +481,28 @@
   .tax-text,
   .turn-text {
     text-align: center;
-    font-size: 3vh;
+    font-size: 2.5vh;
   }
   
   .util-text {
     position: absolute;
     left: 0.25vh;
     bottom: 0.2vh;
-    font-size: 5vh;
+    font-size: 4.5vh;
     transform: rotate(90deg);
   }
   
-  #settings-text {
+  .settings-text {
     position: absolute;
     top: 0.25vh;
   }
   
   .life-main {
-    font-size: 20vh;
+    font-size: 15vh;
   }
   
   .life-cmdr-dmg {
-    font-size: 8vh;
+    font-size: 6vh;
   }
   
   .left.up .life-cmdr-dmg,
@@ -542,7 +542,7 @@
   #turn-counter,
   #open-settings-container,
   #reset {
-    border-radius: 3vh;
+    border-radius: 2vh;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: 100%;
     width: 10vw;
@@ -569,13 +569,13 @@
   }
   
   #settings {
-    border-radius: 3vh;
+    border-radius: 2vh;
     background-color: gray;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     top: 50%;
     left: 50%;
-    width: 60vh;
-    height: 60vh;
+    width: 40vh;
+    height: 40vh;
     transform: translate(-50%, -50%);
     opacity: 0;
     pointer-events:none;
