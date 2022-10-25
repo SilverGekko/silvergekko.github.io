@@ -62,6 +62,7 @@ function remove_idle(elem) {
 }
 
 function register() {
+  update_totals()
   document.querySelectorAll(".button-span").forEach(function(elem) {
     elem.onmousedown = function () {
         timeoutid = start_plus_ten_timer(elem)
