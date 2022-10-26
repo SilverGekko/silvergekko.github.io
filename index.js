@@ -1,7 +1,7 @@
 window.onload = register
 
 //used for adding breaks in landscape text boxes
-let portrait
+let screen_orientation = "portrait"
 
 //used to clear the dark "you pressed here" icons
 let timeout_dict = {}
@@ -13,9 +13,9 @@ let color_dict = {
   "p4" : "#FFA500"
 }
 
-let totals
+let totals = {}
 
-function init_totals() {
+function init() {
   totals = {
     /* Main Life  */
     "p1" : 40,
@@ -61,11 +61,11 @@ function remove_idle(elem) {
 }
 
 function register() {
-  init_totals()
+  init()
 
   const mql = window.matchMedia("(orientation: portrait)");
   function orientation_change() {
-    portrait = mql.matches
+    screen_orientation = mql.matches ? "portrait" : "landscape"
     update_totals()
   }
   mql.onchange = orientation_change
@@ -194,12 +194,12 @@ function update_totals() {
       elem = document.getElementById(key + "-text" + orientation)
       //there is probably a better way to do this
       if (elem.classList.contains("tax-text")) {
-        if (portrait)
+        if (screen_orientation == "portrait")
           elem.innerHTML = "Tax: " +  totals[key]
         else
           elem.innerHTML = "Tax<br/>" + totals[key]
       } else if (elem.classList.contains("turn-text")) {
-        if (portrait)
+        if (screen_orientation == "portrait")
           elem.innerHTML = "Turn: " +  totals[key]
         else
           elem.innerHTML = "Turn<br/>" + totals[key]
@@ -289,7 +289,7 @@ function onLongPress(element, callback) {
 }
 
 function reset_all() {
-  init_totals()
+  init()
   update_totals()
 }
 
@@ -299,6 +299,7 @@ function toggle_settings(set_colors) {
       for (const [key, value] of Object.entries(color_dict)) {
         document.querySelectorAll(".color" + i).forEach(function(elem) {
           const color = document.getElementById("p" + i + "-color").value
+          color_dict["p" + i] = color
           elem.style.backgroundColor = color;
           // http://alienryderflex.com/hsp.html
           // brightness = sqrt( .299 R2 + .587 G2 + .114 B2 )

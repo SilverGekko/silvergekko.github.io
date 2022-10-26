@@ -698,6 +698,7 @@
   #p3p1-container,
   #p4p1-container {
     background-color: Crimson;
+    /* background-color: SeaGreen; */
   }
   
   #player2 .main-life,
@@ -706,6 +707,7 @@
   #p3p2-container,
   #p4p2-container {
     background-color: SlateBlue;
+    /* background-color: Crimson; */
   }
   
   #player3 .main-life,
@@ -714,6 +716,7 @@
   #p3p3-container,
   #p4p3-container {
     background-color: SeaGreen;
+    /* background-color: Orange; */
   }
   
   #player4 .main-life,
@@ -722,6 +725,7 @@
   #p3p4-container,
   #p4p4-container {
     background-color: Orange;
+    /* background-color: SlateBlue; */
   }
   
   #open-settings-container,
