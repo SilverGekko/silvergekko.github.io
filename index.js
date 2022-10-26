@@ -300,6 +300,22 @@ function toggle_settings(set_colors) {
         document.querySelectorAll(".color" + i).forEach(function(elem) {
           const color = document.getElementById("p" + i + "-color").value
           elem.style.backgroundColor = color;
+          // http://alienryderflex.com/hsp.html
+          // brightness = sqrt( .299 R2 + .587 G2 + .114 B2 )
+          const rgb = color.match(/([^#]{1,2})/g)
+          const red = parseInt(rgb[0], 16)
+          const green = parseInt(rgb[1], 16)
+          const blue = parseInt(rgb[2], 16)
+          const brightness = Math.sqrt(
+            (0.299 * red * red) + (0.587 * green * green) + (0.114 * (blue * blue))
+          );
+          if (brightness < 35) {
+            elem.classList.remove("font-color-dark")
+            elem.classList.add("font-color-light")
+          } else {
+            elem.classList.add("font-color-dark")
+            elem.classList.remove("font-color-light")
+          }
         });
       }
     }
