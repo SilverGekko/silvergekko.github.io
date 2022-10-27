@@ -6,22 +6,66 @@ let screen_orientation = "portrait"
 //used to clear the dark "you pressed here" icons
 let timeout_dict = {}
 
-let color_dict = {
-  "p1" : "#DC143C",
-  "p2" : "#6A5ACD",
-  "p3" : "#2E8B57",
-  "p4" : "#FFA500"
-}
+let color_dict = {}
+
+/*
+1 => 3
+2 => 1
+3 => 4
+4 => 2
+*/
+// "p2" : "#DC143C",
+// "p4" : "#6A5ACD",
+// "p1" : "#2E8B57",
+// "p3" : "#FFA500"
 
 let totals = {}
 
-function init() {
+function update_colors() {
+  for (let i = 1; i <= 4; i++) {
+    for (const [key, value] of Object.entries(color_dict)) {
+      document.querySelectorAll(".color" + i).forEach(function(elem) {
+        const color = document.getElementById("p" + i + "-color").value
+        // color_dict["p" + i] = color
+        elem.style.backgroundColor = color;
+        // http://alienryderflex.com/hsp.html
+        // brightness = sqrt( .299 R2 + .587 G2 + .114 B2 )
+        const rgb = color.match(/([^#]{1,2})/g)
+        const red = parseInt(rgb[0], 16)
+        const green = parseInt(rgb[1], 16)
+        const blue = parseInt(rgb[2], 16)
+        const brightness = Math.sqrt(
+          (0.299 * red * red) + (0.587 * green * green) + (0.114 * (blue * blue))
+        );
+        if (brightness < 35) {
+          elem.classList.remove("font-color-dark")
+          elem.classList.add("font-color-light")
+        } else {
+          elem.classList.add("font-color-dark")
+          elem.classList.remove("font-color-light")
+        }
+      });
+    }
+  }
+}
+
+function default_colors() {
+  color_dict = {
+    "p1" : "#DC143C",
+    "p2" : "#6A5ACD",
+    "p3" : "#2E8B57",
+    "p4" : "#FFA500"
+  }
+  console.log(color_dict)
+}
+
+function init_life_and_settings() {
   totals = {
     /* Main Life  */
-    "p1" : 40,
-    "p2" : 40,
-    "p3" : 40,
-    "p4" : 40,
+    "p1" : 1,
+    "p2" : 2,
+    "p3" : 3,
+    "p4" : 4,
     /* Commander Damage  */
     "p1p2" : 0,
     "p1p3" : 0,
@@ -46,6 +90,7 @@ function init() {
     /* Turn #  */
     "turn" : 1
   }
+  update_settings_order()
 }
 
 function print_totals() {
@@ -60,20 +105,40 @@ function remove_idle(elem) {
   }
 }
 
+function update_settings_order() {
+  if (screen_orientation == "landscape") {
+    document.getElementById("settings").innerHTML = 
+    '<input type="color" class="big-color up left" id="p1-color"></input>\
+    <input type="color" class="big-color up right" id="p2-color"></input>\
+    <input type="color" class="big-color down left" id="p3-color"></input>\
+    <input type="color" class="big-color down right" id="p4-color"></input>'
+  } else {
+    document.getElementById("settings").innerHTML = 
+    '<input type="color" class="big-color up left" id="p3-color"></input>\
+    <input type="color" class="big-color up right" id="p1-color"></input>\
+    <input type="color" class="big-color down left" id="p4-color"></input>\
+    <input type="color" class="big-color down right" id="p2-color"></input>'
+  }
+  for (const [key, value] of Object.entries(color_dict)) {
+    document.querySelector("#" + key + "-color").defaultValue = color_dict[key]
+  }
+}
+
 function register() {
-  init()
+  hard_reset(null, true)
 
   const mql = window.matchMedia("(orientation: portrait)");
   function orientation_change() {
     screen_orientation = mql.matches ? "portrait" : "landscape"
     update_totals()
+    update_settings_order()
   }
   mql.onchange = orientation_change
   orientation_change()
 
   document.querySelectorAll(".button-span").forEach(function(elem) {
     elem.onmousedown = function () {
-        timeoutid = start_plus_ten_timer(elem)
+      timeoutid = start_plus_ten_timer(elem)
       fadein(elem)
       timeout_dict[elem] = timeoutid
       remove_idle(elem)
@@ -102,8 +167,8 @@ function register() {
   document.querySelectorAll(".count-by-one").forEach(function(elem) {
     elem.onmousedown = function () {
       timeoutid = start_dec_by_one_timer(elem)
-    fadein(elem)
-    timeout_dict[elem] = timeoutid
+      fadein(elem)
+      timeout_dict[elem] = timeoutid
     }
     elem.addEventListener("touchstart", (event) => {
       event.preventDefault()
@@ -123,24 +188,29 @@ function register() {
     }, false);
   });
 
-  let elems = document.querySelectorAll(".reset-all")
-  elems.forEach((elem) => {
+  document.querySelectorAll(".reset-all").forEach((elem) => {
     elem.onmousedown = function () {
+      timeoutid = start_hard_reset_timer(elem)
       fadein(elem)
+      timeout_dict[elem] = timeoutid
     }
     elem.addEventListener("touchstart", (event) => {
       event.preventDefault()
-      fadein(elem)
-    }, false)
+      timeoutid = start_hard_reset_timer(elem);
+      fadein(elem);
+      timeout_dict[elem] = timeoutid
+    }, false);
     elem.onmouseup = function () {
-      fadeout(elem)
-      reset_all()
+      hard_reset(elem, false)
+      fadeout(elem);
+      clearTimeout(timeout_dict[elem])
     }
     elem.addEventListener("touchend", (event) => {
       event.preventDefault()
-      fadeout(elem)
-      reset_all()
-    }, false)
+      hard_reset(elem, false);
+      fadeout(elem);
+      clearTimeout(timeout_dict[elem])
+    }, false);
   });
   //end reset-all
   let settings_elems = document.querySelectorAll(".open-settings")
@@ -172,10 +242,7 @@ function register() {
     toggle_settings("color")
   }, false)
 
-  //reset the 4 colors to the defaults on reset
-  for (const [key, value] of Object.entries(color_dict)) {
-    document.querySelector("#" + key + "-color").defaultValue = color_dict[key]
-  }
+  update_colors()
 }
 
 function start_plus_ten_timer(elem) {
@@ -184,6 +251,14 @@ function start_plus_ten_timer(elem) {
 
 function start_dec_by_one_timer(elem) {
   return setTimeout(function () { incdec(elem, -1) }, 400)
+}
+
+function start_hard_reset_timer(elem) {
+  console.log("hard reset scheduled")
+  return setTimeout(function () { 
+    console.log("hard reset CALLED")
+    hard_reset(elem, true)
+  }, 800)
 }
 
 function update_totals() {
@@ -219,9 +294,6 @@ function update_totals() {
 function incdec(elem, value) {
   if (elem.classList.contains("modified")) {
     elem.classList.remove("modified")
-    if (timeout_dict[elem] !== null && timeout_dict[elem] !== undefined) {
-      clearTimeout(timeoutid)
-    }
     return
   }
   let id_split = elem.id.split("-")
@@ -289,37 +361,32 @@ function onLongPress(element, callback) {
 }
 
 function reset_all() {
-  init()
+  init_life_and_settings()
   update_totals()
+}
+
+function hard_reset(elem, reset_colors) {
+  if (elem !== undefined && elem !== null) {
+    if (elem.classList.contains("modified")) {
+      elem.classList.remove("modified")
+      return
+    }
+  }
+  if (elem !== undefined && elem !== null) {
+    elem.classList.add("modified")
+    elem.classList.remove("dark")
+  }
+  reset_all()
+  if (reset_colors) {
+    default_colors()
+    update_colors()
+  }
+  timeout_dict = {}
 }
 
 function toggle_settings(set_colors) {
   if (set_colors == "color") {
-    for (let i = 1; i <= 4; i++) {
-      for (const [key, value] of Object.entries(color_dict)) {
-        document.querySelectorAll(".color" + i).forEach(function(elem) {
-          const color = document.getElementById("p" + i + "-color").value
-          color_dict["p" + i] = color
-          elem.style.backgroundColor = color;
-          // http://alienryderflex.com/hsp.html
-          // brightness = sqrt( .299 R2 + .587 G2 + .114 B2 )
-          const rgb = color.match(/([^#]{1,2})/g)
-          const red = parseInt(rgb[0], 16)
-          const green = parseInt(rgb[1], 16)
-          const blue = parseInt(rgb[2], 16)
-          const brightness = Math.sqrt(
-            (0.299 * red * red) + (0.587 * green * green) + (0.114 * (blue * blue))
-          );
-          if (brightness < 35) {
-            elem.classList.remove("font-color-dark")
-            elem.classList.add("font-color-light")
-          } else {
-            elem.classList.add("font-color-dark")
-            elem.classList.remove("font-color-light")
-          }
-        });
-      }
-    }
+    update_colors()
   }
 
   if (document.querySelector("#settings").classList.contains("hidden"))
