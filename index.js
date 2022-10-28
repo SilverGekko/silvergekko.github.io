@@ -107,17 +107,17 @@ function remove_idle(elem) {
 
 function update_settings_order() {
   if (screen_orientation == "landscape") {
-    document.getElementById("settings").innerHTML = 
-    '<input type="color" class="big-color up left" id="p1-color"></input>\
-    <input type="color" class="big-color up right" id="p2-color"></input>\
-    <input type="color" class="big-color down left" id="p3-color"></input>\
-    <input type="color" class="big-color down right" id="p4-color"></input>'
+    document.getElementById("settings-swap").innerHTML = 
+     '<input type="color" class="big-color up left" id="p1-color"></input>\
+      <input type="color" class="big-color up right" id="p2-color"></input>\
+      <input type="color" class="big-color down left" id="p3-color"></input>\
+      <input type="color" class="big-color down right" id="p4-color"></input>'
   } else {
-    document.getElementById("settings").innerHTML = 
-    '<input type="color" class="big-color up left" id="p3-color"></input>\
-    <input type="color" class="big-color up right" id="p1-color"></input>\
-    <input type="color" class="big-color down left" id="p4-color"></input>\
-    <input type="color" class="big-color down right" id="p2-color"></input>'
+    document.getElementById("settings-swap").innerHTML = 
+     '<input type="color" class="big-color up left" id="p3-color"></input>\
+      <input type="color" class="big-color up right" id="p1-color"></input>\
+      <input type="color" class="big-color down left" id="p4-color"></input>\
+      <input type="color" class="big-color down right" id="p2-color"></input>'
   }
   for (const [key, value] of Object.entries(color_dict)) {
     document.querySelector("#" + key + "-color").defaultValue = color_dict[key]
