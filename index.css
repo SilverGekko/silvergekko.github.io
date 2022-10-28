@@ -17,14 +17,25 @@
     position: absolute;
     width: 100%;
     height: 100%;
+  }
+
+  .column {
+    float: left;
+    width: 33.33%;
+    height: 100%;
     display: grid;
-    grid-template-columns: 50% 50%;
   }
   
+  .row {
+    height: 100%;
+    width: 100%;
+  }
+
   .item {
+    width: 100%;
+    height: 100%;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+    padding: 0.1vw;
   }
   
   .top {
@@ -51,12 +62,17 @@
   
   .main-life {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 85%;
     height: 100%;
     /* these three items will center the contents */
     display: flex;
     position: relative;
     border-radius: 6vh;
+  }
+
+  #up-to-down-cmdr-dmg-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
   
   .spanner {
@@ -151,19 +167,34 @@
   }
   
   .cmd-dmg-side,
+  .cmd-dmg-outer,
   #turn-counter,
   #open-settings-container,
   #reset {
     border-radius: 3vh;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    height: 50%;
-    width: 11.5vw;
-    margin-bottom: 1vh;
+    height: 11%;
+    width: 50%;
+    /* margin-bottom: 1vh; */
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
+  .cmd-dmg-outer {
+    box-sizing: border-box;
+    padding: 0.18vw;
+  }
+
+  .cmd-dmg-side {
+    height: 100%;
+    width: 100%;
+  }
+
+  #player1 {
+    box-sizing: border-box;
+  }
+
   #settings {
     border-radius: 3vh;
     background-color: gray;
@@ -179,12 +210,21 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+
     padding: 2vh;
   }
   
   .big-color {
     width: 100%;
     height: 100%;
+  }
+
+  .big-color:nth-child(3) {
+    grid-column: 1;
+  }
+
+  .big-color:nth-child(4) {
+    grid-column: 2;
   }
   
   #blank-out {
@@ -198,6 +238,7 @@
   }
   
   .fade-in-settings {
+    grid-template-columns: 50% 50%;
     animation: fadeInSettings .3s forwards;
   }
   
@@ -245,12 +286,8 @@
     visibility: hidden;
   }
   
-  .up .cmd-dmg-side:last-child {
-    margin-bottom: 0;
-  }
-  
   #open-settings-container {
-    position: fixed; /* or absolute */
+    /* position: fixed;
     position: absolute;
     margin: auto;
     left: 86%;
@@ -258,38 +295,28 @@
     width: 5.4vw;
     height:10vh;
     left: 58.68%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
+    height: 100%;
   }
   
   #reset {
-    position: fixed; /* or absolute */
+    /* position: fixed;
     position: absolute;
     margin: auto;
     top: 50%;
     height:10vh;
     width: 5.4vw;
     left: 52.78%;
-    transform: translate(-50%, -50%);
-  }
-  
-  #turn-counter {
-    position: fixed; /* or absolute */
-    position: absolute;
-    margin: auto;
-    top: 50%;
-    left: 43.78%;
-    height:10vh;
-    transform: translate(-50%, -50%);
-  }
-  
-  .cmd-dmg-bottom {
+    transform: translate(-50%, -50%); */
     height: 100%;
-    width: 13.5vw;
-    float: right;
-    margin-left: 1vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-right: 0.5vw;
+  }
+
+  #reset-and-settings-container,
+  #turn-counter {
+    width: 50%;
+    width: 100%;
+    height: 100%;
   }
   
   .up .main-life,
@@ -297,7 +324,7 @@
     transform: rotate(180deg);
   }
   
-  #player1 .main-life,
+  #player1.main-life,
   #p1p1-container,
   #p2p1-container,
   #p3p1-container,
@@ -305,7 +332,7 @@
     background-color: Crimson;
   }
   
-  #player2 .main-life,
+  #player2.main-life,
   #p1p2-container,
   #p2p2-container,
   #p3p2-container,
@@ -313,7 +340,7 @@
     background-color: SlateBlue;
   }
   
-  #player3 .main-life,
+  #player3.main-life,
   #p1p3-container,
   #p2p3-container,
   #p3p3-container,
@@ -321,7 +348,7 @@
     background-color: SeaGreen;
   }
   
-  #player4 .main-life,
+  #player4.main-life,
   #p1p4-container,
   #p2p4-container,
   #p3p4-container,
@@ -686,16 +713,6 @@
   
   #turn-counter .turn-text {
     transform: rotate(90deg);
-  }
-  
-  .cmd-dmg-bottom {
-    height: 100%;
-    width: 13.5vw;
-    float: right;
-    margin-left: 1vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
   
   #player1 .main-life,

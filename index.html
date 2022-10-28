@@ -13,7 +13,6 @@
     />
   <title>LifeCounter</title>
   <link rel="icon" type="image/x-icon" href="favicon.png">
-  <!-- <link rel="stylesheet" href="static/index.css"> -->
   <link rel="stylesheet" href="index.css">
   <script src="index.js"></script>
 </head>
@@ -189,150 +188,175 @@
   </div>
   <div id="landscape">
     <div class="main-win">
-      <div class="item left up" id="player1">
-        <div class="top">
-          <div class="main-life color1">
-            <div class="button-span decrease" id="p1-decrease"></div>
-            <div class="button-span increase" id="p1-increase"></div>
-            <div class="life life-main" id="p1-text-L"></div>
+      <div class="row">
+        <div class="column">
+          <div class="item">
+            <div class="main-life color1" id="player1">
+              <div class="button-span decrease" id="p1-decrease"></div>
+              <div class="button-span increase" id="p1-increase"></div>
+              <div class="life life-main" id="p1-text-L"></div>
+            </div>
           </div>
-          <div class="main-sidebar">
+          <div class="item">
+            <div class="main-life color3" id="player3">
+              <div class="button-span decrease" id="p3-decrease"></div>
+              <div class="button-span increase" id="p3-increase"></div>
+              <div class="life life-main" id="p3-text-L"></div>
+            </div>
+          </div>
+        </div>
+        <div class="column" id="up-to-down-cmdr-dmg-container">
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color1" id="p1p1-container">
               <div class="single-button count-by-one tax" id="p1p1-increase"></div>
               <div class="life tax-text right" id="p1p1-text-L"></div>
             </div>
+          </div>
+          <div class="cmd-dmg-outer">
+            <div class="cmd-dmg-side color2" id="p2p2-container">
+              <div class="single-button count-by-one tax" id="p2p2-increase"></div>
+              <div class="life tax-text" id="p2p2-text-L"></div>
+            </div>
+          </div>
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color2 idle" id="p1p2-container">
               <div class="button-span decrease cmdr-dmg" id="p1p2-decrease"></div>
               <div class="button-span increase cmdr-dmg" id="p1p2-increase"></div>
               <div class="life life-cmdr-dmg" id="p1p2-text-L"></div>
             </div>
+          </div>
+          <div class="cmd-dmg-outer">
+            <div class="cmd-dmg-side color1 idle" id="p2p1-container">
+              <div class="button-span decrease cmdr-dmg" id="p2p1-decrease"></div>
+              <div class="button-span increase cmdr-dmg" id="p2p1-increase"></div>
+              <div class="life life-cmdr-dmg" id="p2p1-text-L"></div>
+            </div>
+          </div>
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color3 idle" id="p1p3-container">
               <div class="button-span decrease cmdr-dmg" id="p1p3-decrease"></div>
               <div class="button-span increase cmdr-dmg" id="p1p3-increase"></div>
-              <div class="life life-cmdr-dmg" id="p1p3-text-L"></div>
+            <div class="life life-cmdr-dmg" id="p1p3-text-L"></div>
             </div>
+          </div>
+          <div class="cmd-dmg-outer">
+            <div class="cmd-dmg-side color4 idle" id="p2p4-container">
+              <div class="button-span decrease cmdr-dmg" id="p2p4-decrease"></div>
+              <div class="button-span increase cmdr-dmg" id="p2p4-increase"></div>
+              <div class="life life-cmdr-dmg" id="p2p4-text-L"></div>
+            </div>
+          </div>
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color4 idle" id="p1p4-container">
               <div class="button-span decrease cmdr-dmg" id="p1p4-decrease"></div>
               <div class="button-span increase cmdr-dmg" id="p1p4-increase"></div>
               <div class="life life-cmdr-dmg" id="p1p4-text-L"></div>
             </div>
           </div>
-        </div>
-        <div class="bottom"></div>
-      </div>
-      <div class="item right up" id="player2">
-        <div class="top">
-          <div class="main-sidebar">
-            <div class="cmd-dmg-side color2" id="p2p2-container">
-              <div class="single-button count-by-one tax" id="p2p2-increase"></div>
-              <div class="life tax-text" id="p2p2-text-L"></div>
-            </div>
-            <div class="cmd-dmg-side color1 idle" id="p2p1-container">
-              <div class="button-span decrease cmdr-dmg" id="p2p1-decrease"></div>
-              <div class="button-span increase cmdr-dmg" id="p2p1-increase"></div>
-              <div class="life life-cmdr-dmg" id="p2p1-text-L"></div>
-            </div>
-            <div class="cmd-dmg-side color4 idle" id="p2p4-container">
-              <div class="button-span decrease cmdr-dmg" id="p2p4-decrease"></div>
-              <div class="button-span increase cmdr-dmg" id="p2p4-increase"></div>
-              <div class="life life-cmdr-dmg" id="p2p4-text-L"></div>
-            </div>
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color3 idle" id="p2p3-container">
               <div class="button-span decrease cmdr-dmg" id="p2p3-decrease"></div>
               <div class="button-span increase cmdr-dmg" id="p2p3-increase"></div>
               <div class="life life-cmdr-dmg" id="p2p3-text-L"></div>
             </div>
           </div>
-          <div class="main-life color2">
-            <div class="button-span decrease" id="p2-decrease"></div>
-            <div class="button-span increase" id="p2-increase"></div>
-            <div class="life life-main" id="p2-text-L"></div>
+          <div class="cmd-dmg-outer">
+            <div class="cmd-dmg-side">
+              <div id="turn-counter">
+                <div class="single-button count-by-one turn" id="turn-increase"></div>
+                <div class="life turn-text" id="turn-text-L"></div>
+            </div>
+            </div>
           </div>
-        </div>
-        <div class="bottom"></div>
-      </div>
-      <div class="item left down" id="player3">
-        <div class="bottom"></div>
-        <div class="top">
-          <div class="main-life color3">
-            <div class="button-span decrease" id="p3-decrease"></div>
-            <div class="button-span increase" id="p3-increase"></div>
-            <div class="life life-main" id="p3-text-L"></div>
+          <div class="cmd-dmg-outer">
+            <div class="cmd-dmg-side">
+              <div id="reset-and-settings-container" class="cmd-dmg-side">
+                <div id="reset">
+                  <div class="single-button count-by-one-reset reset-all"></div>
+                  <div class="life reset-text util-text">♻️</div>
+                </div>
+                <div id="open-settings-container">
+                  <div class="single-button count-by-one-special open-settings"></div>
+                  <div class="life settings-text util-text">⚙️</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="main-sidebar">
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color2 idle" id="p3p2-container">
               <div class="button-span decrease cmdr-dmg" id="p3p2-decrease"></div>
               <div class="button-span increase cmdr-dmg" id="p3p2-increase"></div>
               <div class="life life-cmdr-dmg" id="p3p2-text-L"></div>
             </div>
-            <div class="cmd-dmg-side color1 idle" id="p3p1-container">
-              <div class="button-span decrease cmdr-dmg" id="p3p1-decrease"></div>
-              <div class="button-span increase cmdr-dmg" id="p3p1-increase"></div>
-              <div class="life life-cmdr-dmg" id="p3p1-text-L"></div>
-            </div>
-            <div class="cmd-dmg-side color4 idle" id="p3p4-container">
-              <div class="button-span decrease cmdr-dmg" id="p3p4-decrease"></div>
-              <div class="button-span increase cmdr-dmg" id="p3p4-increase"></div>
-              <div class="life life-cmdr-dmg" id="p3p4-text-L"></div>
-            </div>
-            <div class="cmd-dmg-side color3" id="p3p3-container">
-              <div class="single-button count-by-one tax" id="p3p3-increase"></div>
-              <div class="life tax-text" id="p3p3-text-L"></div>
-            </div>
           </div>
-        </div>
-      </div>
-      <div class="item right down" id="player4">
-        <div class="bottom"></div>
-        <div class="top">
-          <div class="main-sidebar">
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color1 idle" id="p4p1-container">
               <div class="button-span decrease cmdr-dmg" id="p4p1-decrease"></div>
               <div class="button-span increase cmdr-dmg" id="p4p1-increase"></div>
               <div class="life life-cmdr-dmg" id="p4p1-text-L"></div>
             </div>
+          </div>
+          <div class="cmd-dmg-outer">
+            <div class="cmd-dmg-side color1 idle" id="p3p1-container">
+              <div class="button-span decrease cmdr-dmg" id="p3p1-decrease"></div>
+              <div class="button-span increase cmdr-dmg" id="p3p1-increase"></div>
+              <div class="life life-cmdr-dmg" id="p3p1-text-L"></div>
+            </div>
+          </div>
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color2 idle" id="p4p2-container">
               <div class="button-span decrease cmdr-dmg" id="p4p2-decrease"></div>
               <div class="button-span increase cmdr-dmg" id="p4p2-increase"></div>
               <div class="life life-cmdr-dmg" id="p4p2-text-L"></div>
             </div>
+          </div>
+          <div class="cmd-dmg-outer">
+            <div class="cmd-dmg-side color4 idle" id="p3p4-container">
+              <div class="button-span decrease cmdr-dmg" id="p3p4-decrease"></div>
+              <div class="button-span increase cmdr-dmg" id="p3p4-increase"></div>
+              <div class="life life-cmdr-dmg" id="p3p4-text-L"></div>
+            </div>
+          </div>
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color3 idle" id="p4p3-container">
               <div class="button-span decrease cmdr-dmg" id="p4p3-decrease"></div>
               <div class="button-span increase cmdr-dmg" id="p4p3-increase"></div>
               <div class="life life-cmdr-dmg" id="p4p3-text-L"></div>
             </div>
+          </div>
+          <div class="cmd-dmg-outer">
+            <div class="cmd-dmg-side color3" id="p3p3-container">
+              <div class="single-button count-by-one tax" id="p3p3-increase"></div>
+              <div class="life tax-text" id="p3p3-text-L"></div>
+            </div>
+          </div>
+          <div class="cmd-dmg-outer">
             <div class="cmd-dmg-side color4" id="p4p4-container">
               <div class="single-button count-by-one tax" id="p4p4-increase"></div>
               <div class="life tax-text" id="p4p4-text-L"></div>
             </div>
           </div>
-          <div class="main-life color4">
-            <div class="button-span decrease" id="p4-decrease"></div>
-            <div class="button-span increase" id="p4-increase"></div>
-            <div class="life life-main" id="p4-text-L"></div>
+        </div>
+        <div class="column">
+          <div class="item">
+            <div class="main-life color2" id="player2">
+              <div class="button-span decrease" id="p2-decrease"></div>
+              <div class="button-span increase" id="p2-increase"></div>
+              <div class="life life-main" id="p2-text-L"></div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="main-life color4" id="player4">
+              <div class="button-span decrease" id="p4-decrease"></div>
+              <div class="button-span increase" id="p4-increase"></div>
+              <div class="life life-main" id="p4-text-L"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div id="turn-counter">
-      <div class="single-button count-by-one turn" id="turn-increase"></div>
-      <div class="life turn-text" id="turn-text-L"></div>
-    </div>
-    <div id="open-settings-container">
-      <div class="single-button count-by-one-special open-settings"></div>
-      <div class="life util-text settings-text">⚙️</div>
-    </div>
-    <div id="reset">
-      <div class="single-button count-by-one-reset reset-all"></div>
-      <div class="life util-text reset-text">♻️</div>
-    </div>
   </div>
   <div class="main-win fade-out-bg hidden" id="blank-out"></div>
-  <div class="main-win fade-out-settings hidden" id="settings">
-    <!-- <input type="color" class="big-color up left" id="p1-color"></input>
-    <input type="color" class="big-color up right" id="p2-color"></input>
-    <input type="color" class="big-color down left" id="p3-color"></input>
-    <input type="color" class="big-color down right" id="p4-color"></input> -->
-  </div>
+  <div class="main-win fade-out-settings hidden" id="settings"></div>
 </body>
 </html>
