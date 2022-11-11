@@ -144,7 +144,7 @@
   .tax-text,
   .turn-text {
     text-align: center;
-    font-size: 4vh;
+    font-size: 3.5vh;
   }
   
   .util-text {
@@ -358,8 +358,8 @@
     height: 100%;
   }
   
-  .up .main-life,
-  .up .cmd-dmg-side {
+  .up.main-life,
+  .up.cmd-dmg-side {
     transform: rotate(180deg);
   }
   
@@ -566,7 +566,7 @@
   .tax-text,
   .turn-text {
     text-align: center;
-    font-size: 2.5vh;
+    font-size: 2vh;
   }
   
   :root {
@@ -856,7 +856,3 @@
 .width-50 {
   width: 50%;
 }
-
-/* .middle-margin-right {
-  margin-right: 0.25vw;
-} */

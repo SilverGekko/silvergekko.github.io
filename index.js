@@ -98,6 +98,11 @@ function init_life_and_settings() {
     "p2p2" : 0,
     "p3p3" : 0,
     "p4p4" : 0,
+/* PartnerTax*/
+    "p1p1a" : 0,
+    "p2p2a" : 0,
+    "p3p3a" : 0,
+    "p4p4a" : 0,
     /*Partner*/
     "p1p2a" : 0,
     "p1p3a" : 0,
@@ -132,7 +137,7 @@ function process_partners(elem) {
   const ids = ["p1", "p2", "p3", "p4"]
   //toggle the commander damage from one commander to two
   for (const item of ids) {
-    if (item == id) continue;
+    // if (item == id) continue;
     if (elem.checked) {
       document.querySelectorAll("#" + item + id + "a-container").forEach(con => {
         con.classList.remove("display-none")
@@ -473,13 +478,12 @@ function hard_reset(elem, reset_colors) {
     update_colors()
     for (const item of ["p1", "p2", "p3", "p4"]) {
       for (const id of ["p1", "p2", "p3", "p4"]) {
-        if (id == item) continue
         const con = id + item
         document.querySelectorAll("#" + con + "a-container").forEach(a_con => {
           a_con.classList.add("display-none")
         })
         document.querySelectorAll("#" + con + "-container").forEach(normal => {
-          normal.classList.remove("middle-margin-right")
+          normal.classList.remove("partner-separator")
         })
       }
     }
