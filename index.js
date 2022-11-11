@@ -21,6 +21,11 @@ let color_dict = {}
 
 let totals = {}
 
+let checkboxes = {}
+
+let in_hard_reset = false
+let cancel_normal_reset = false
+
 function update_colors() {
   for (let i = 1; i <= 4; i++) {
     for (const [key, value] of Object.entries(color_dict)) {
@@ -56,16 +61,22 @@ function default_colors() {
     "p3" : "#2E8B57",
     "p4" : "#FFA500"
   }
-  console.log(color_dict)
+
+  checkboxes = {
+    "p1" : false,
+    "p2" : false,
+    "p3" : false,
+    "p4" : false
+  }
 }
 
 function init_life_and_settings() {
   totals = {
     /* Main Life  */
-    "p1" : 1,
-    "p2" : 2,
-    "p3" : 3,
-    "p4" : 4,
+    "p1" : 40,
+    "p2" : 40,
+    "p3" : 40,
+    "p4" : 40,
     /* Commander Damage  */
     "p1p2" : 0,
     "p1p3" : 0,
@@ -87,10 +98,58 @@ function init_life_and_settings() {
     "p2p2" : 0,
     "p3p3" : 0,
     "p4p4" : 0,
-    /* Turn #  */
+    /*Partner*/
+    "p1p2a" : 0,
+    "p1p3a" : 0,
+    "p1p4a" : 0,
+    ////////////
+    "p2p1a" : 0,
+    "p2p3a" : 0,
+    "p2p4a" : 0,
+    ////////////
+    "p3p1a" : 0,
+    "p3p2a" : 0,
+    "p3p4a" : 0,
+    ////////////
+    "p4p1a" : 0,
+    "p4p2a" : 0,
+    "p4p3a" : 0,
+    /* Turn # */
     "turn" : 1
   }
   update_settings_order()
+}
+
+function clear_timeouts() {
+  for (const [key, value] of Object.entries(timeout_dict)) {
+    clearTimeout(value)
+  }
+}
+
+function process_partners(elem) {
+  const player_id = elem.id
+  const id = player_id.split('partners')[0]
+  const ids = ["p1", "p2", "p3", "p4"]
+  //toggle the commander damage from one commander to two
+  for (const item of ids) {
+    if (item == id) continue;
+    if (elem.checked) {
+      document.querySelectorAll("#" + item + id + "a-container").forEach(con => {
+        con.classList.remove("display-none")
+      })
+      document.querySelectorAll("#" + item + id + "-container").forEach(con => {
+        con.classList.add("middle-margin-right")
+      })
+    } else {
+      document.querySelectorAll("#" + item + id + "a-container").forEach(con => {
+        con.classList.add("display-none")
+      })
+      document.querySelectorAll("#" + item + id + "-container").forEach(con => {
+        con.classList.remove("middle-margin-right")
+      })
+    }
+    checkboxes[id] = elem.checked
+  }
 }
 
 function print_totals() {
@@ -108,10 +167,10 @@ function remove_idle(elem) {
 function update_settings_order() {
   if (screen_orientation == "landscape") {
     document.getElementById("settings-swap").innerHTML = 
-     '<input type="color" class="big-color up left" id="p1-color"></input>\
-      <input type="color" class="big-color up right" id="p2-color"></input>\
-      <input type="color" class="big-color down left" id="p3-color"></input>\
-      <input type="color" class="big-color down right" id="p4-color"></input>'
+     '<div class="holder"><input type="checkbox" onchange="process_partners(this);" class="big-color left big-box" id="p1partners" name="p1partners"><input type="color" class="big-color right" id="p1-color"></input></div>\
+      <div class="holder"><input type="color" class="big-color left" id="p2-color"></input><input type="checkbox" onchange="process_partners(this);" class="big-color right big-box" id="p2partners" name="p2partners"></div>\
+      <div class="holder"><input type="checkbox" onchange="process_partners(this);" class="big-color left big-box" id="p3partners" name="p3partners"><input type="color" class="big-color right" id="p3-color"></input></div>\
+      <div class="holder"><input type="color" class="big-color left" id="p4-color"></input><input type="checkbox" onchange="process_partners(this);" class="big-color right big-box" id="p4partners" name="p4partners"></div>'
   } else {
     document.getElementById("settings-swap").innerHTML = 
      '<input type="color" class="big-color up left" id="p3-color"></input>\
@@ -121,6 +180,9 @@ function update_settings_order() {
   }
   for (const [key, value] of Object.entries(color_dict)) {
     document.querySelector("#" + key + "-color").defaultValue = color_dict[key]
+  }
+  for (const [key, value] of Object.entries(checkboxes)) {
+    document.getElementById(key + "partners").checked = checkboxes[value]
   }
 }
 
@@ -188,31 +250,43 @@ function register() {
     }, false);
   });
 
+  function mousedown_reset(elem) {
+    timeoutid = start_hard_reset_timer(elem)
+    fadein(elem)
+    timeout_dict[elem] = timeoutid
+  }
+
+  function mouseup_reset(elem) {
+    if (in_hard_reset) {
+      in_hard_reset = false
+    }
+    fadeout(elem);
+    if (cancel_normal_reset) {
+      cancel_normal_reset = false
+      return
+    }
+    hard_reset(elem, false)
+    clearTimeout(timeout_dict[elem])
+  }
+
   document.querySelectorAll(".reset-all").forEach((elem) => {
     elem.onmousedown = function () {
-      timeoutid = start_hard_reset_timer(elem)
-      fadein(elem)
-      timeout_dict[elem] = timeoutid
+      mousedown_reset(elem)
     }
     elem.addEventListener("touchstart", (event) => {
       event.preventDefault()
-      timeoutid = start_hard_reset_timer(elem);
-      fadein(elem);
-      timeout_dict[elem] = timeoutid
+      mousedown_reset(elem)
     }, false);
     elem.onmouseup = function () {
-      hard_reset(elem, false)
-      fadeout(elem);
-      clearTimeout(timeout_dict[elem])
+      mouseup_reset(elem)
     }
     elem.addEventListener("touchend", (event) => {
       event.preventDefault()
-      hard_reset(elem, false);
-      fadeout(elem);
-      clearTimeout(timeout_dict[elem])
+      mouseup_reset(elem)
     }, false);
   });
   //end reset-all
+
   let settings_elems = document.querySelectorAll(".open-settings")
   settings_elems.forEach((elem) => {
     elem.onmousedown = function () {
@@ -255,6 +329,7 @@ function start_dec_by_one_timer(elem) {
 
 function start_hard_reset_timer(elem) {
   console.log("hard reset scheduled")
+  in_hard_reset = true
   return setTimeout(function () { 
     console.log("hard reset CALLED")
     hard_reset(elem, true)
@@ -268,6 +343,7 @@ function update_totals() {
       if(!totals.hasOwnProperty(key)) continue
       elem = document.getElementById(key + "-text" + orientation)
       //there is probably a better way to do this
+      if (elem == null) continue
       if (elem.classList.contains("tax-text")) {
         if (screen_orientation == "portrait")
           elem.innerHTML = "Tax: " +  totals[key]
@@ -316,7 +392,9 @@ function incdec(elem, value) {
     let change_main_life = true
     if (val_to_update <= 0) {
       //need to re-add the idle class to make the commander damage boxes dark again
-      document.getElementById(player_id + "-container").classList.add("idle")
+      document.querySelectorAll("#" + player_id + "-container").forEach(node => {
+        node.classList.add("idle")
+      })
     }
     if (val_to_update < 0) {
       val_to_update = 0
@@ -365,23 +443,48 @@ function reset_all() {
   update_totals()
 }
 
-function hard_reset(elem, reset_colors) {
-  if (elem !== undefined && elem !== null) {
-    if (elem.classList.contains("modified")) {
-      elem.classList.remove("modified")
-      return
-    }
+function fake_reset(elem, reset_colors) {
+  console.log("fake reset called with args:")
+  console.log("in_reset: ", in_hard_reset)
+  console.log(elem, reset_colors)
+  if (in_hard_reset) {
+    cancel_normal_reset = true
+    fadeout(elem)
   }
-  if (elem !== undefined && elem !== null) {
-    elem.classList.add("modified")
-    elem.classList.remove("dark")
+  in_hard_reset = false
+}
+
+function hard_reset(elem, reset_colors) {
+  console.log("in_hard_reset: ", in_hard_reset);
+  console.log("cancel_normal_reset: ", cancel_normal_reset);
+  if (in_hard_reset) {
+    cancel_normal_reset = true
+    fadeout(elem)
   }
   reset_all()
-  if (reset_colors) {
+  for (const checkbox in ["p1partners", "p2partners", "p2partners", "p4partners"]) {
+    const partner = document.getElementById(checkbox)
+    if (partner != null) {
+      partner.checked = false
+    }
+  }
+  if (reset_colors == true) {
     default_colors()
     update_colors()
+    for (const item of ["p1", "p2", "p3", "p4"]) {
+      for (const id of ["p1", "p2", "p3", "p4"]) {
+        if (id == item) continue
+        const con = id + item
+        document.querySelectorAll("#" + con + "a-container").forEach(a_con => {
+          a_con.classList.add("display-none")
+        })
+        document.querySelectorAll("#" + con + "-container").forEach(normal => {
+          normal.classList.remove("middle-margin-right")
+        })
+      }
+    }
   }
-  timeout_dict = {}
+  clear_timeouts()
 }
 
 function toggle_settings(set_colors) {
