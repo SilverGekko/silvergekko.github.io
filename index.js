@@ -138,14 +138,14 @@ function process_partners(elem) {
         con.classList.remove("display-none")
       })
       document.querySelectorAll("#" + item + id + "-container").forEach(con => {
-        con.classList.add("middle-margin-right")
+        con.classList.add("partner-separator")
       })
     } else {
       document.querySelectorAll("#" + item + id + "a-container").forEach(con => {
         con.classList.add("display-none")
       })
       document.querySelectorAll("#" + item + id + "-container").forEach(con => {
-        con.classList.remove("middle-margin-right")
+        con.classList.remove("partner-separator")
       })
     }
     checkboxes[id] = elem.checked
@@ -173,10 +173,10 @@ function update_settings_order() {
       <div class="holder"><input type="color" class="big-color left" id="p4-color"></input><input type="checkbox" onchange="process_partners(this);" class="big-color right big-box" id="p4partners" name="p4partners"></div>'
   } else {
     document.getElementById("settings-swap").innerHTML = 
-     '<input type="color" class="big-color up left" id="p3-color"></input>\
-      <input type="color" class="big-color up right" id="p1-color"></input>\
-      <input type="color" class="big-color down left" id="p4-color"></input>\
-      <input type="color" class="big-color down right" id="p2-color"></input>'
+    '<div class="holder"><input type="checkbox" onchange="process_partners(this);" class="big-color left big-box" id="p3partners" name="p3partners"></input><input type="checkbox" onchange="process_partners(this);" class="big-color right big-box" id="p1partners" name="p1partners"></div>\
+    <div class="holder"><input type="color" class="big-color left" id="p3-color"></input><input type="color" class="big-color right" id="p1-color"></input></div>\
+    <div class="holder"><input type="color" class="big-color left" id="p4-color"></input><input type="color" class="big-color right" id="p2-color"></input></div>\
+    <div class="holder"><input type="checkbox" onchange="process_partners(this);" class="big-color left big-box" id="p4partners" name="p4partners"><input type="checkbox" onchange="process_partners(this);" class="big-color right big-box" id="p2partners" name="p2partners"></div>'
   }
   for (const [key, value] of Object.entries(color_dict)) {
     document.querySelector("#" + key + "-color").defaultValue = color_dict[key]
